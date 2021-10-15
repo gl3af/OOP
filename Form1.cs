@@ -29,17 +29,19 @@ namespace Interface
         int rect_count;
 
         //Square
-        //
-        //
-        //
+        Square square;
+        Square[] square_data;
+        int square_count;
         #endregion
         public main_form()
         {
             InitializeComponent();
             circle_count = 0;
             rect_count = 0;
+            square_count = 0;
             circle_data = new Circle[100];
             rect_data = new Rectangle[100];
+            square_data = new Square[100];
             bmp = new Bitmap(main_picture.Width, main_picture.Height);
             gr = Graphics.FromImage(bmp);
         }
@@ -474,6 +476,194 @@ namespace Interface
                         {
                             MessageBox.Show("Введены не натуральные числа!");
                         }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Введены не натуральные числа!");
+                }
+            }
+        }
+
+        #endregion
+
+        #region Square_Create
+
+        private void square_create_random_Click(object sender, EventArgs e)
+        {
+            square = new Square();
+            MessageBox.Show($"Круг создан! ID: {square_count}");
+            square_data[square_count] = square;
+            square_data[square_count].SetVisibility(true);
+            square_data[square_count++].Show(gr, Color.Red);
+            main_picture.Image = bmp;
+        }
+
+        private void square_create_Click(object sender, EventArgs e)
+        {
+            var x = square_create_x.Text;
+            var y = square_create_y.Text;
+            var side = square_create_side.Text;
+
+            if (String.IsNullOrWhiteSpace(x) || String.IsNullOrWhiteSpace(y) || String.IsNullOrWhiteSpace(side))
+            {
+                MessageBox.Show("Поле(-я) пустое(-ые)!");
+            }
+            else
+            {
+                if (IsNumber(x) && IsNumber(y) && IsNumber(side))
+                {
+                    circle = new Circle(Convert.ToInt32(x), Convert.ToInt32(y), Convert.ToInt32(side));
+                    MessageBox.Show($"Круг создан! ID: {square_count}");
+                    square_data[square_count] = square;
+                    square_data[square_count].SetVisibility(true);
+                    square_data[square_count++].Show(gr, Color.Red);
+                    main_picture.Image = bmp;
+                }
+                else
+                {
+                    MessageBox.Show("Введены не натуральные числа!");
+                }
+            }
+        }
+
+        #endregion
+
+        #region Square_Move
+
+        private void square_move_all_Click(object sender, EventArgs e)
+        {
+            var dx = square_move_x.Text;
+            var dy = square_move_y.Text;
+
+            if (String.IsNullOrWhiteSpace(dx) || String.IsNullOrWhiteSpace(dy))
+            {
+                MessageBox.Show("Поле(-я) пустые!");
+            }
+            else
+            {
+                if (IsNumber(dx) && IsNumber(dy))
+                {
+                    for (int i = 0; i < square_count; i++)
+                    {
+                        if (square_data[i].IsVisible())
+                            square_data[i].MoveTo(gr, Convert.ToInt32(dx), Convert.ToInt32(dy));
+                    }
+                    main_picture.Image = bmp;
+                }
+                else
+                {
+                    MessageBox.Show("Введены не натуральные числа!");
+                }
+            }
+        }
+
+        private void square_move_by_id_Click(object sender, EventArgs e)
+        {
+            var dx = circle_move_x.Text;
+            var dy = circle_move_y.Text;
+            var id = circle_move_id.Text;
+
+            if (String.IsNullOrWhiteSpace(dx) || String.IsNullOrWhiteSpace(dy) || String.IsNullOrWhiteSpace(id))
+            {
+                MessageBox.Show("Поле(-я) пустые!");
+            }
+            else
+            {
+                if (IsNumber(id))
+                {
+                    int[] id_list = new int[100];
+                    for (int i = 0; i < 100; i++)
+                    {
+                        id_list[i] = -1;
+                    }
+                    int k = 0;
+                    for (int i = 0; i < circle_count; i++)
+                    {
+                        if (square_data[i].IsVisible())
+                            id_list[k++] = i;
+                    }
+
+                    if (!id_list.Contains<int>(Convert.ToInt32(id)))
+                    {
+                        String ids = "";
+                        for (int i = 0; i < k; i++)
+                        {
+                            ids = ids + id_list[i].ToString() + " ";
+                        }
+                        MessageBox.Show("Неверный ID! Доступные ID: " + ids);
+                    }
+                    else
+                    {
+                        if (IsNumber(dx) && IsNumber(dy))
+                        {
+                            square_data[Convert.ToInt32(id)].MoveTo(gr, Convert.ToInt32(dx), Convert.ToInt32(dy));
+                            main_picture.Image = bmp;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Введены не натуральные числа!");
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Введены не натуральные числа!");
+                }
+            }
+        }
+
+        #endregion
+
+        #region Square_Delete
+        private void square_delete_all_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < square_count; i++)
+            {
+                square_data[i].SetVisibility(false);
+                square_data[i].Show(gr, main_picture.BackColor);
+            }
+            main_picture.Image = bmp;
+        }
+
+        private void square_delete_by_id_Click(object sender, EventArgs e)
+        {
+            var id = square_delete_id.Text;
+
+            if (String.IsNullOrWhiteSpace(id))
+            {
+                MessageBox.Show("Поле пустое!");
+            }
+            else
+            {
+                if (IsNumber(id))
+                {
+                    int[] id_list = new int[100];
+                    for (int i = 0; i < 100; i++)
+                    {
+                        id_list[i] = -1;
+                    }
+                    int k = 0;
+                    for (int i = 0; i < square_count; i++)
+                    {
+                        if (square_data[i].IsVisible())
+                            id_list[k++] = i;
+                    }
+
+                    if (!id_list.Contains<int>(Convert.ToInt32(id)))
+                    {
+                        String ids = "";
+                        for (int i = 0; i < k; i++)
+                        {
+                            ids = ids + id_list[i].ToString() + " ";
+                        }
+                        MessageBox.Show("Неверный ID! Доступные ID: " + ids);
+                    }
+                    else
+                    {
+                        square_data[Convert.ToInt32(id)].Show(gr, main_picture.BackColor);
+                        square_data[Convert.ToInt32(id)].SetVisibility(false);
+                        main_picture.Image = bmp;
                     }
                 }
                 else

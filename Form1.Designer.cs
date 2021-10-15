@@ -780,6 +780,7 @@
             this.square_delete_all.TabIndex = 31;
             this.square_delete_all.Text = "Удалить все";
             this.square_delete_all.UseVisualStyleBackColor = true;
+            this.square_delete_all.Click += new System.EventHandler(this.square_delete_all_Click);
             // 
             // square_delete_by_id
             // 
@@ -789,6 +790,7 @@
             this.square_delete_by_id.TabIndex = 30;
             this.square_delete_by_id.Text = "Удалить по ID";
             this.square_delete_by_id.UseVisualStyleBackColor = true;
+            this.square_delete_by_id.Click += new System.EventHandler(this.square_delete_by_id_Click);
             // 
             // label25
             // 
@@ -816,6 +818,7 @@
             this.square_move_by_id.TabIndex = 27;
             this.square_move_by_id.Text = "Переместить по ID";
             this.square_move_by_id.UseVisualStyleBackColor = true;
+            this.square_move_by_id.Click += new System.EventHandler(this.square_move_by_id_Click);
             // 
             // square_move_all
             // 
@@ -825,6 +828,7 @@
             this.square_move_all.TabIndex = 26;
             this.square_move_all.Text = "Переместить все";
             this.square_move_all.UseVisualStyleBackColor = true;
+            this.square_move_all.Click += new System.EventHandler(this.square_move_all_Click);
             // 
             // label27
             // 
@@ -843,6 +847,7 @@
             this.square_create.TabIndex = 24;
             this.square_create.Text = "Создать";
             this.square_create.UseVisualStyleBackColor = true;
+            this.square_create.Click += new System.EventHandler(this.square_create_Click);
             // 
             // square_create_random
             // 
@@ -852,6 +857,7 @@
             this.square_create_random.TabIndex = 23;
             this.square_create_random.Text = "Создать случайно";
             this.square_create_random.UseVisualStyleBackColor = true;
+            this.square_create_random.Click += new System.EventHandler(this.square_create_random_Click);
             // 
             // label28
             // 
